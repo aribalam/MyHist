@@ -37,6 +37,13 @@ class Regular(bha.Regular):
         self.metadata["name"] = value
 
 
+class bool(Regular):
+
+    def __init__(self, name=None, growth=False, circular=False, transform=None):
+        super().__init__(2, 0, 1, name=name, underflow=False, overflow=False,
+                         growth=growth, circular=circular, transform=transform)
+
+
 class Variable(bha.Variable):
     pass
 
