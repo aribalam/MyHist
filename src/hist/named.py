@@ -10,6 +10,8 @@ class NamedHist(BaseHist):
         self.namedaxis = {}
 
         for i, axis in enumerate(self.axes):
+
+            # check if axis has a name
             if not axis.metadata.get('name', None):
                 raise KeyError('The name of axis required')
 
@@ -17,13 +19,10 @@ class NamedHist(BaseHist):
             self.namedaxis[axis.metadata['name']] = i
 
     def fill(self, *args, **kwargs):
-        '''
-        Case 1: All values are passed as kwargs
-                Get position of the axis from its name, pass it in that order
-
-        checks:
-            If passed as kwargs, check if all axis values are passed
-        '''
+        """
+        Inserts data to histogram, adds support for data passed as axis names
+        Filling should be done using axis names as keywords (i.e no args should be provided)
+        """
 
         if len(args) > 0:
             raise ValueError("Filling should be done using keyword arguments only")
@@ -43,10 +42,10 @@ class NamedHist(BaseHist):
         super().fill(*value_list, **kwargs)
 
     def __getitem__(self, item):
-        '''
-        Case 1: Dict is provided
-                Axis name to number mapping. pass to super
-        '''
+        """
+        Added support for slices provided as axis names
+        Transforms the axis names to its index and passes it to its superclass function
+        """
 
         # the axis name could only be provided in the form of dict
         # convert axis name to axis number in this case
@@ -68,6 +67,3 @@ class NamedHist(BaseHist):
             return super().__getitem__(new_item)
         else:
             return super().__getitem__(item)
-
-
-    #TODO: Implement a shortcut axis type bool - Integer axis with no underflow or overflow and two bins set to zero
