@@ -37,6 +37,22 @@ class Regular(bha.Regular):
         self.metadata["name"] = value
 
 
+class bool(bha.Integer):
+
+    def __init__(self, name=None, growth=False, circular=False):
+        metadata = dict(name=name)
+        super().__init__(0, 2, metadata=metadata, underflow=False, overflow=False,
+                         growth=growth, circular=circular)
+
+    @property
+    def name(self):
+        return self.metadata["name"]
+
+    @name.setter
+    def name(self, value):
+        self.metadata["name"] = value
+
+
 class Variable(bha.Variable):
     pass
 
