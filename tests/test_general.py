@@ -33,7 +33,7 @@ def test_basic_usage():
         axis.bool()
     )
 
-    h.fill([0.25, 0.75, 0.75])
+    h.fill([0, 1, 1])
 
     assert h[0] == 1
     assert h[1] == 2
